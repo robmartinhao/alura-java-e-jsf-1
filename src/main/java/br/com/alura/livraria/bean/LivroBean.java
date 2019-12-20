@@ -51,6 +51,11 @@ public class LivroBean {
         new DAO<Livro>(Livro.class).adiciona(this.livro);
     }
 
+    public void remover(Livro livro){
+        System.out.println("Removendo o livro " + livro.getTitulo());
+        new DAO<>(Livro.class).remove(livro);
+    }
+
     public String formAutor() {
         System.out.println("Chamando o formulario do Autor");
         return "autor?faces-redirect=true";
