@@ -30,9 +30,10 @@ public class LivroBean {
     public List<Autor> getAutores() {
         return new DAO<Autor>(Autor.class).listaTodos();
     }
+
     public List<Autor> getAutoresDoLivro() {
-    	return this.livro.getAutores();
-	}
+        return this.livro.getAutores();
+    }
 
     public void gravarAutor() {
         Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
@@ -48,12 +49,21 @@ public class LivroBean {
             return;
         }
 
-        new DAO<Livro>(Livro.class).adiciona(this.livro);
+        if (this.livro.getId() == null) {
+            new DAO<Livro>(Livro.class).adiciona(this.livro);
+        } else {
+            new DAO<Livro>(Livro.class).atualiza(this.livro);
+        }
     }
 
-    public void remover(Livro livro){
+    public void remover(Livro livro) {
         System.out.println("Removendo o livro " + livro.getTitulo());
         new DAO<>(Livro.class).remove(livro);
+    }
+
+    public void carregar(Livro livro) {
+        System.out.println("Carregando o livro " + livro.getTitulo());
+        this.livro = livro;
     }
 
     public String formAutor() {
