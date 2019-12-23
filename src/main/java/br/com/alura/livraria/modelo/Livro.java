@@ -20,7 +20,7 @@ public class Livro {
 	private Calendar dataLancamento = Calendar.getInstance();
 
 	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Autor> autores = new ArrayList<Autor>();
+	private List<Autor> autores = new ArrayList<>();
 
 	public List<Autor> getAutores() {
 		return autores;

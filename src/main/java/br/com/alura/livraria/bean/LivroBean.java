@@ -50,9 +50,9 @@ public class LivroBean {
         }
 
         if (this.livro.getId() == null) {
-            new DAO<Livro>(Livro.class).adiciona(this.livro);
+            new DAO<>(Livro.class).adiciona(this.livro);
         } else {
-            new DAO<Livro>(Livro.class).atualiza(this.livro);
+            new DAO<>(Livro.class).atualiza(this.livro);
         }
     }
 

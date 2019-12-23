@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head/>
 
@@ -17,9 +18,32 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Nome:" for="nome"/>
                     <h:inputText id="nome" value="#{autorBean.autor.nome}"/>
-                    <h:commandButton value="Gravar" action="#{autorBean.gravar}"/>
                 </h:panelGrid>
             </fieldset>
+            <h:commandButton value="Gravar" action="#{autorBean.gravar}">
+                <f:ajax execute="@form" render="@form :formTabelaAutores:tabelaAutores"/>
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="formTabelaAutores">
+            <h:dataTable value="#{autorBean.autores}" var="autor" id="tabelaAutores">
+                <h:column>
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{autor.nome}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Alterar</f:facet>
+                    <h:commandLink value="altera" action="#{autorBean.carregar(autor)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Remover</f:facet>
+                    <h:commandLink value="remove" action="#{autorBean.remover(autor)}"/>
+                </h:column>
+            </h:dataTable>
+            <br/>
+
+            <h:commandLink value="Cadastrar novo livro" action="#{autorBean.formLivro}" immediate="true"/>
+
         </h:form>
     </ui:define>
     <ui:define name="texto">
