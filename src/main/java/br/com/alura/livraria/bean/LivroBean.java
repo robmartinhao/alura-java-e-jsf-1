@@ -70,6 +70,10 @@ public class LivroBean {
         this.livro = livro;
     }
 
+    public void carregarLivroPeloId() {
+        this.livro = new DAO<>(Livro.class).buscaPorId(livro.getId());
+    }
+
     public String formAutor() {
         System.out.println("Chamando o formulario do Autor");
         return "autor?faces-redirect=true";

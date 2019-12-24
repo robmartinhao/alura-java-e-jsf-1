@@ -9,6 +9,10 @@
 <h:head/>
 
 <ui:composition template="_template.xhtml">
+    <f:metadata>
+        <f:viewParam name="id" value="#{livroBean.livro.id}"/>
+        <f:viewAction action="#{livroBean.carregarLivroPeloId()}" if="#{param.id != null}"/>
+    </f:metadata>
     <ui:define name="titulo">
         Novo Livro
     </ui:define>
