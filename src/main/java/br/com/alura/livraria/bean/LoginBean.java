@@ -4,6 +4,7 @@ import br.com.alura.livraria.dao.UsuarioDao;
 import br.com.alura.livraria.modelo.Autor;
 import br.com.alura.livraria.modelo.Usuario;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -26,15 +27,26 @@ public class LoginBean {
         this.usuario = usuario;
     }
 
-    public String efetuaLogin(){
+    public String efetuaLogin() {
         System.out.println("Fazendo login do usuario " + this.usuario.getSenha());
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
         boolean existe = new UsuarioDao().existe(this.usuario);
-        if(existe) {
-            FacesContext context = FacesContext.getCurrentInstance();
+        if (existe) {
             context.getExternalContext().getSessionMap().put("usuarioLogado", this.usuario);
             return "livro?faces-redirect=true";
         }
+
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage("Usuario nao encontrado"));
+
+        return "login?faces-redirect=true";
+    }
+
+    public String deslogar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("usuarioLogado");
         return "login?faces-redirect=true";
     }
 }
